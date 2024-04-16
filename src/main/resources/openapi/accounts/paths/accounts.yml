@@ -29,6 +29,42 @@ post:
     "500":
       $ref: "../../common/responses.yml#/components/responses/internalServerError"
 
+patch:
+  summary: Update first name, last name and email of user accounts
+  operationId: updateUserAccount
+  description: Returns a user account with updated parameters.
+  tags:
+    - Account
+  parameters:
+    - in: path
+      name: accountId
+      required: true
+      schema:
+        type: string
+      description: The ID of the user account to update.
+  requestBody:
+    description: User account details
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../schemas.yml#/components/schemas/createAccount"
+  responses:
+    "200":
+      description: User account
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas.yml#/components/schemas/account"
+    "400":
+      $ref: "../../common/responses.yml#/components/responses/badRequest"
+    "401":
+      $ref: "../../common/responses.yml#/components/responses/unauthorized"
+    "403":
+      $ref: "../../common/responses.yml#/components/responses/forbidden"
+    "500":
+      $ref: "../../common/responses.yml#/components/responses/internalServerError"
+
 get:
   summary: Get list of user accounts
   operationId: getUserAccounts

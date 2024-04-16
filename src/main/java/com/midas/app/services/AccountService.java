@@ -18,4 +18,11 @@ public interface AccountService {
    * @return List<Account>
    */
   List<Account> getAccounts();
+
+  /**
+   * updateAccount updates fields of account.
+   *
+   * @return Account
+   */
+  Account updateAccount(Account details);
 }

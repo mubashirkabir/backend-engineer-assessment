@@ -1,5 +1,6 @@
 package com.midas.app.services;
 
+import com.midas.app.exceptions.ResourceNotFoundException;
 import com.midas.app.models.Account;
 import com.midas.app.repositories.AccountRepository;
 import com.midas.app.workflows.CreateAccountWorkflow;
@@ -49,5 +50,33 @@ public class AccountServiceImpl implements AccountService {
   @Override
   public List<Account> getAccounts() {
     return accountRepository.findAll();
+  }
+
+  @Override
+  public Account updateAccount(Account details) {
+
+    if (details.getId() == null) {
+      throw new ResourceNotFoundException("no account found with the provided id");
+    }
+
+    Account savedAccount =
+        accountRepository
+            .findById(details.getId())
+            .orElseThrow(
+                () -> new ResourceNotFoundException("no account found with the provided id"));
+
+    if (details.getFirstName() != null) {
+      savedAccount.setFirstName(details.getFirstName());
+    }
+
+    if (details.getLastName() != null) {
+      savedAccount.setLastName(details.getLastName());
+    }
+
+    if (details.getEmail() != null) {
+      savedAccount.setEmail(details.getEmail());
+    }
+
+    return accountRepository.save(savedAccount);
   }
 }
