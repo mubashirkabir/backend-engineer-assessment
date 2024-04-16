@@ -1,5 +1,6 @@
 package com.midas.app.providers.payment;
 
+import java.util.UUID;
 import lombok.*;
 
 @RequiredArgsConstructor
@@ -8,7 +9,7 @@ import lombok.*;
 @Getter
 @Builder
 public class CreateAccount {
-  private String userId;
+  private UUID userId;
   private String firstName;
   private String lastName;
   private String email;

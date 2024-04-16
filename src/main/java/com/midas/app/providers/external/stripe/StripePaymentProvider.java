@@ -1,8 +1,12 @@
 package com.midas.app.providers.external.stripe;
 
 import com.midas.app.models.Account;
+import com.midas.app.models.ProviderType;
 import com.midas.app.providers.payment.CreateAccount;
 import com.midas.app.providers.payment.PaymentProvider;
+import com.stripe.exception.StripeException;
+import com.stripe.param.AccountCreateParams;
+import java.util.Optional;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -19,8 +23,8 @@ public class StripePaymentProvider implements PaymentProvider {
 
   /** providerName is the name of the payment provider */
   @Override
-  public String providerName() {
-    return "stripe";
+  public ProviderType providerName() {
+    return ProviderType.STRIPE;
   }
 
   /**
@@ -30,7 +34,30 @@ public class StripePaymentProvider implements PaymentProvider {
    * @return Account
    */
   @Override
-  public Account createAccount(CreateAccount details) {
-    throw new UnsupportedOperationException("Not implemented");
+  public Optional<Account> createAccount(CreateAccount details) {
+    try {
+      AccountCreateParams params =
+          AccountCreateParams.builder()
+              .setType(AccountCreateParams.Type.STANDARD)
+              .setCountry("US")
+              .setEmail("example@example.com")
+              .build();
+
+      com.stripe.model.Account account = com.stripe.model.Account.create(params);
+
+      return Optional.of(
+          Account.builder()
+              .id(details.getUserId())
+              .firstName(details.getFirstName())
+              .lastName(details.getLastName())
+              .email(details.getEmail())
+              .providerType(ProviderType.STRIPE)
+              .providerId(account.getId())
+              .build());
+
+    } catch (StripeException e) {
+      logger.error("error while creating stripe account for the user id " + details.getUserId());
+      return Optional.empty();
+    }
   }
 }
