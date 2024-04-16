@@ -1,12 +1,3 @@
-# Getting Started
-
-**IMPORTANT: Do not send pull requests to this repository. This is a template repository and is not used for grading. Any pull requests will be closed and ignored.**
-
-## Introduction
-
-If you are reading this, you are probably have received this project as a coding challenge. Please read the instructions
-carefully and follow the steps below to get started.
-
 ## Setup
 
 ### Pre-requisities
