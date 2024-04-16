@@ -15,6 +15,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Entity
 @Table(name = "accounts")
 public class Account {
+
   @Id
   @Column(name = "id")
   @GeneratedValue
@@ -28,6 +29,13 @@ public class Account {
 
   @Column(name = "email")
   private String email;
+
+  @Column(name = "provider_type")
+  @Enumerated(EnumType.STRING)
+  private ProviderType providerType;
+
+  @Column(name = "provider_id")
+  private String providerId;
 
   @Column(name = "created_at")
   @CreationTimestamp

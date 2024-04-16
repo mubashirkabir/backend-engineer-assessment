@@ -39,6 +39,14 @@ components:
           type: string
           description: "Email of user"
           example: "john@doe.com"
+        providerType:
+          type: string
+          description: "Provider Type of user"
+          example: "STRIPE"
+        providerId:
+          type: string
+          description: "Provider ID of user"
+          example: "cu_14HOpH2eZvKYlo2CxXIM7Pb2"
         createdAt:
           type: string
           format: date-time
